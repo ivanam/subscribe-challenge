@@ -66,7 +66,7 @@ class PurchaseService
     puts "Enter the name of the file that contains the products"
     puts "The format of each product entered should be: <quantity> <name> at <price with two decimals>"
 
-    Readline.readline
+    Readline.readline("-> ")
   end
 
   def generate_receipt

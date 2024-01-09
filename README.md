@@ -76,6 +76,20 @@ Run ```bundle install```
 
 Run ```ruby main.rb``` 
 
+Console displays the following message:
+```
+Enter the name of the file that contains the products
+The format of each product entered should be: <quantity> <name> at <price with two decimals>
+```
+
+Then enter a name from the possible preloaded file names:  
+```
+input_1.txt
+input_2.txt
+input_3.txt
+input_4_error.txt  -> (this is to show an error)
+```
+
 ## Run Tests
 
 Run ```ruby ./test/run.rb``` 
