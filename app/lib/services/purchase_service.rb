@@ -65,7 +65,6 @@ class PurchaseService
   def enter_file_name
     puts "Enter the name of the file that contains the products"
     puts "The format of each product entered should be: <quantity> <name> at <price with two decimals>"
-    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
 
     Readline.readline
   end
