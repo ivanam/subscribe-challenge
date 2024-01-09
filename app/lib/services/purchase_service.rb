@@ -10,22 +10,26 @@ class PurchaseService
     @purchased_items = []
   end
 
-  def enter_products
-    puts "Enter the products you wish to buy"
-    puts "the format to enter the data is: <quantity> <name> at <price with two decimals>"
-    puts "when you do not want to enter more products, you can enter the character 'n'"
-    loop do
-      input = Readline.readline("-> ")
-      regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
-      break if input == "n"
+  def create_products(file_name)
+    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
 
-      matches = input.match(regex)
+    begin
+      File.open(file_name, 'r') do |file|
+        file.each_line do |input|
+          matches = input.match(regex)
 
-      if matches && TypeProduct.is_valid(matches[3])
-        create_product(matches)
-      else
-        puts "The chain does not match the expected format"
+          if matches && TypeProduct.is_valid(matches[3])
+            create_product(matches)
+          else
+            puts "File does not have the expected format"
+            break
+          end
+        end
       end
+      rescue Errno::ENOENT
+        puts "File #{file_name} was not found."
+      rescue StandardError => e
+        puts "An error occurred when opening the file: #{e.message}"
     end
   end
 
@@ -58,8 +62,17 @@ class PurchaseService
     add_item(product)
   end
 
+  def enter_file_name
+    puts "Enter the name of the file that contains the products"
+    puts "The format of each product entered should be: <quantity> <name> at <price with two decimals>"
+    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
+
+    Readline.readline
+  end
+
   def generate_receipt
-    enter_products
+    file_name = enter_file_name
+    create_products(file_name)
     print_receipt
   end
 end

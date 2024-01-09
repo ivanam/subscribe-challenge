@@ -14,19 +14,7 @@ class PurchaseServiceTest < Minitest::Test
     EXPECTED
 
     purchase_service = PurchaseService.new
-    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
-
-    input = "2 book at 12.49"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "1 music CD at 14.99"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "1 chocolate bar at 0.85"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
+    purchase_service.create_products("input_1.txt")
 
     output_source = StringIO.new
     $stdout = output_source
@@ -49,15 +37,7 @@ class PurchaseServiceTest < Minitest::Test
     EXPECTED
 
     purchase_service = PurchaseService.new
-    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
-
-    input = "1 imported box of chocolates at 10.00"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "1 imported bottle of perfume at 47.50"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
+    purchase_service.create_products("input_2.txt")
 
     output_source = StringIO.new
     $stdout = output_source
@@ -82,23 +62,7 @@ class PurchaseServiceTest < Minitest::Test
     EXPECTED
 
     purchase_service = PurchaseService.new
-    regex = /^(\d+)\s*(imported)?\s*([\w\s]+)\sat\s(\d+\.\d{2})$/
-
-    input = "1 imported bottle of perfume at 27.99"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "1 bottle of perfume at 18.99"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "1 packet of headache pills at 9.75"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
-
-    input = "3 imported boxes of chocolates at 11.25"
-    matches = input.match(regex)
-    purchase_service.create_product(matches)
+    purchase_service.create_products("input_3.txt")
 
     output_source = StringIO.new
     $stdout = output_source
@@ -106,7 +70,6 @@ class PurchaseServiceTest < Minitest::Test
     purchase_service.print_receipt
 
     $stdout = STDOUT
-
     assert_equal 4, purchase_service.purchased_items.size
     assert_equal expected_output, output_source.string
   end
